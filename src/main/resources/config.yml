@@ -1,0 +1,4 @@
+enable: false
+nats: 'nats://itsusinn.site:4222'
+channel: ''
+lang: 'zh_CN'
