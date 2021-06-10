@@ -6,8 +6,8 @@ plugins {
 }
 
 group = "org.meowcat"
-version = "1.0.0-rc"
-val mccoroutine = "0.0.6"
+version = "1.1.0"
+val mccoroutine = "1.5.0"
 repositories {
    mavenCentral()
    jcenter()
@@ -38,13 +38,10 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
       "org.jetbrains:annotations"
    )
    dependencyFilter.exclude {
-      val shouldExclude =
-         it.moduleGroup in excluded ||
-            it.moduleName in excluded ||
-            "${it.moduleGroup}:${it.moduleName}" in excluded
-
+      it.moduleGroup in excluded ||
+         it.moduleName in excluded ||
+         "${it.moduleGroup}:${it.moduleName}" in excluded
       // println("${it.moduleGroup}:${it.moduleName}  shouldExclude:$shouldExclude")
-      shouldExclude
    }
    relocate("io.izzel.taboolib.loader", "${project.group}.module.internal.boot")
 }
