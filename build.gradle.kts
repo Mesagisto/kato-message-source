@@ -1,3 +1,6 @@
+group = "org.meowcat"
+version = "1.1.1"
+
 plugins {
    java
    kotlin("jvm") version "1.4.20"
@@ -5,8 +8,6 @@ plugins {
    id("io.izzel.taboolib") version "1.3"
 }
 
-group = "org.meowcat"
-version = "1.1.0"
 val mccoroutine = "1.5.0"
 repositories {
    mavenCentral()
