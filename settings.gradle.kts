@@ -1,1 +1,1 @@
-rootProject.name = "bukkit-mesaga-fonto"
+rootProject.name = "mesagisto"

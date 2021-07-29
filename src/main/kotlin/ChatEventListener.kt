@@ -1,11 +1,11 @@
 package org.meowcat.mesagisto.bukkit
 
-import io.izzel.taboolib.module.locale.TLocale
 import io.nats.client.Nats
 import io.nats.client.impl.Headers
 import io.nats.client.impl.NatsMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -13,7 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.meowcat.mesagisto.bukkit.MesagistoPlugin.channel
 import org.meowcat.mesagisto.bukkit.MesagistoPlugin.enable
 import org.meowcat.mesagisto.bukkit.MesagistoPlugin.nats
-import org.meowcat.mesagisto.bukkit.extension.launch
+import taboolib.common.platform.info
 import kotlin.coroutines.CoroutineContext
 
 object ChatEventListener : Listener, CoroutineScope {
@@ -24,22 +24,24 @@ object ChatEventListener : Listener, CoroutineScope {
    private val natsHeaders by lazy { Headers().add("cid", cid) }
 
    @EventHandler
-   suspend fun handle(event: AsyncPlayerChatEvent) {
+   fun handle(event: AsyncPlayerChatEvent) {
       if (!enable) {
-         TLocale.sendToConsole("warn.not-enable")
+         info("插件将不会被启用！")
          return
       }
-      if (nats == null || channel == "") {
-         TLocale.sendToConsole("warn.incomplete-config")
+      if (channel == "") {
+         info("内容不完整/格式不正确 的配置文件")
          return
       }
       event.handle()
    }
    @JvmName("handle-chat-event")
-   suspend fun AsyncPlayerChatEvent.handle() {
+   fun AsyncPlayerChatEvent.handle() {
       val content = "<${player.name}>: $message".toByteArray()
       val mesage = NatsMessage(channel, null, natsHeaders, content, false)
-      nc.publish(mesage)
+      launch {
+         nc.publish(mesage)
+      }
       fino
    }
    private val fino by lazy {

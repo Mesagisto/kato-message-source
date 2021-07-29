@@ -1,9 +1,0 @@
-plugin:
-  loading:
-    - ''
-    - '信使插件加载中... {0}'
-    - ''
-  enabled: '信使插件已启用. 当前版本 {0}.'
-warn:
-  not-enable: '插件将不会被启用！'
-  incomplete-config: '不完整的配置文件'

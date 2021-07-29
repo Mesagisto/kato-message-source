@@ -1,28 +1,32 @@
 package org.meowcat.mesagisto.bukkit
 
-import com.github.shynixn.mccoroutine.registerSuspendingEvents
-import io.izzel.taboolib.loader.Plugin
-import io.izzel.taboolib.module.config.TConfig
-import io.izzel.taboolib.module.inject.TInject
-import io.izzel.taboolib.module.locale.TLocale
 import org.bukkit.Bukkit
+import taboolib.common.platform.Plugin
+import taboolib.common.platform.info
+import taboolib.library.configuration.Configuration
+import taboolib.module.configuration.Config
+import taboolib.platform.BukkitPlugin
 
 object MesagistoPlugin : Plugin() {
 
    val enable by lazy { CONFIG.getBoolean("enable") }
-   val nats by lazy { CONFIG.getString("nats") }
+   val nats: String by lazy { CONFIG.getString("nats") }
    val channel by lazy { CONFIG.getString("channel", "")!! }
 
-   @TInject("config.yml", locale = "language", migrate = true)
-   lateinit var CONFIG: TConfig
+   private val bukkitPlugin by lazy { BukkitPlugin.getInstance() }
+
+   @Config("config.yml", migrate = true)
+   lateinit var CONFIG: Configuration
       private set
 
    override fun onLoad() {
-      TLocale.sendToConsole("plugin.loading", Bukkit.getBukkitVersion())
+      info("")
+      info("信使插件加载中...${Bukkit.getBukkitVersion()}")
+      info("")
    }
 
    override fun onEnable() {
-      TLocale.sendToConsole("plugin.enable", plugin.description.version)
-      plugin.server.pluginManager.registerSuspendingEvents(ChatEventListener, plugin)
+      info("信使插件已启用. 当前版本 ${bukkitPlugin.description.version}")
+      bukkitPlugin.server.pluginManager.registerEvents(ChatEventListener, bukkitPlugin)
    }
 }
