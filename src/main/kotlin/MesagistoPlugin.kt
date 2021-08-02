@@ -1,10 +1,12 @@
 package org.meowcat.mesagisto.bukkit
 
 import org.bukkit.Bukkit
+import taboolib.common.env.RuntimeDependencies
+import taboolib.common.env.RuntimeDependency
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.info
-import taboolib.library.configuration.Configuration
 import taboolib.module.configuration.Config
+import taboolib.module.configuration.SecuredFile
 import taboolib.platform.BukkitPlugin
 
 object MesagistoPlugin : Plugin() {
@@ -16,7 +18,7 @@ object MesagistoPlugin : Plugin() {
    private val bukkitPlugin by lazy { BukkitPlugin.getInstance() }
 
    @Config("config.yml", migrate = true)
-   lateinit var CONFIG: Configuration
+   lateinit var CONFIG: SecuredFile
       private set
 
    override fun onLoad() {
