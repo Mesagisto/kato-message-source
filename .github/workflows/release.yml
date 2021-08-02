@@ -1,5 +1,10 @@
 name: release
-on: workflow_dispatch
+
+on:
+  push:
+    tags:
+      - "v*"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,32 +27,26 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Gradle build
-        run: ./gradlew build shadowJar
+        run: ./gradlew build
 
       - name: Cleanup Gradle Cache
-        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
-        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
 
-      - name: Move,rename packages and get tag,version
+      - name: Move,rename packages
         id: package
         run: |
           mkdir packages
           mv build/libs/*-all.jar packages/
-          v1="version"
-          v1=`grep -m 1 $v1 build.gradle.kts`
-          v1=${v1%\"*}
-          output=${v1#*\"}
-          echo "::set-output name=VERSION::$output"
-          
+          cd packages
+          mv *-all.jar bmf.jar
+
       - name: Github release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.package.outputs.VERSION }}"
           prerelease: true
-          title: "Bukkit Message Source ${{ steps.package.outputs.VERSION }}"
           files: |
             packages/*.jar
+            LICENSE
