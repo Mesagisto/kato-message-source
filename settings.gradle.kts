@@ -1,10 +1,9 @@
-rootProject.name = "mesagisto"
+rootProject.name = "taboo-message-source"
 pluginManagement {
-   repositories {
-      maven("./maven-repo")
-      gradlePluginPortal()
-      mavenCentral()
-      google()
-      maven("https://jitpack.io")
-   }
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+    mavenCentral()
+    google()
+  }
 }
