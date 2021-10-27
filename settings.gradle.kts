@@ -1,4 +1,4 @@
-rootProject.name = "taboo-message-source"
+rootProject.name = "kato-message-source"
 pluginManagement {
   repositories {
     mavenLocal()
