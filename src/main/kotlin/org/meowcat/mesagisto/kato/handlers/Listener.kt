@@ -15,10 +15,10 @@ object Listener : Listener, CoroutineScope {
   @EventHandler
   fun handle(event: AsyncPlayerChatEvent) {
     if (!Config.enable) {
-      Logger.info("插件未被启用！")
+      Logger.info { "插件未被启用！" }
       return
     }
-    Logger.info("sending")
+    Logger.info { "sending" }
 
     launch {
       send(event)

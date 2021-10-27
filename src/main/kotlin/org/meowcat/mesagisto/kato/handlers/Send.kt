@@ -16,7 +16,7 @@ import org.meowcat.mesagisto.kato.IdGen
 suspend fun send(
   event: AsyncPlayerChatEvent
 ) {
-  Logger.info("sending2")
+  Logger.info { "sending2" }
 
   val channel = Config.channel ?: return
   val msgId = IdGen.gen()

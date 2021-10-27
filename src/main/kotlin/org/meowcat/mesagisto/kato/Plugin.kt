@@ -21,7 +21,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
   }
   override suspend fun onEnable() = runCatching fn@{
     if (!Config.enable) {
-      Logger.info("信使插件未启用")
+      Logger.info { "信使插件未启用" }
       return@fn
     }
     if (Config.cipher.enable) {
@@ -34,9 +34,8 @@ object Plugin : JvmPlugin(), CoroutineScope {
     Res.resolvePhotoUrl { _, _ ->
       Result.failure(IllegalStateException("Unreachable"))
     }
-
     bukkit.server.pluginManager.registerEvents(Listener, bukkit)
-    Logger.info("信使插件启用成功")
+    Logger.info { "信使插件启用成功" }
   }
 
   override suspend fun onDisable() = runCatching {

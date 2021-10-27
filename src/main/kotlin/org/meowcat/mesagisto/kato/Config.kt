@@ -44,13 +44,11 @@ object Config {
     inner.save(File("plugins/mesagisto/config.yml"))
   }
   class NatsConfig {
-
     val address: String
       get() = inner.getString("nats.server", "nats://itsusinn.site:4222")!!
   }
 
   class CipherConfig {
-
     val enable: Boolean
       get() = inner.getBoolean("cipher.enable", true)
     val key: String
