@@ -1,5 +1,5 @@
 group = "org.meowcat"
-version = "1.0.0"
+version = "1.1.0-rc1"
 
 plugins {
   java
@@ -38,7 +38,7 @@ dependencies {
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
   implementation("io.nats:jnats:2.12.0")
-  implementation("org.meowcat:mesagisto-client-jvm:1.0.7")
+  implementation("org.meowcat:mesagisto-client-jvm:1.0.8")
   implementation("io.arrow-kt:arrow-core:1.0.0")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
