@@ -27,18 +27,15 @@ suspend fun send(
   val message = Message(
     profile = Profile(
       // fixme
-      0L,
+      ByteArray(0),
       sender.name,
       sender.displayName
     ),
     id = msgId.toByteArray(),
     chain = chain
   )
-  val packet = if (Config.cipher.enable) {
-    Packet.encryptFrom(message.left())
-  } else {
-    Packet.from(message.left())
-  }
+  val packet = Packet.from(message.left())
+
   Server.sendAndRegisterReceive(0L, channel, packet) receive@{ it, _ ->
     return@receive receive(it as NatsMessage)
   }
