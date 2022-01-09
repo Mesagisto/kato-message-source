@@ -20,7 +20,6 @@ pkg {
   excludePath("*.md")
   excludePath("DebugProbesKt.bin")
   excludePathStartWith("META-INF/maven")
-  excludePathStartWith("org/bouncycastle")
   excludePathStartWith("org/slf4j")
   shadowJar {
     minimize()
