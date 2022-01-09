@@ -1,9 +1,9 @@
 all: linux-x86 linux-x86_64 windows-x86_64 mac-x86_64
 compile: gradlew
-	./gradlew build buildKatoPlugin
+	./gradlew clean pkg
 	rm -rf packages
 	mkdir -p packages
-	mv build/kato/*.jar packages/
+	mv build/pkg/*.jar packages/
 	mv packages/*.jar packages/kato-all.jar
 extract: compile
 	rm -rf extract

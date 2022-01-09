@@ -4,23 +4,30 @@ plugins {
   java
   kotlin("jvm") version "1.5.21"
   kotlin("plugin.serialization") version "1.5.21"
-  id("com.github.johnrengelman.shadow") version "6.0.0"
+  id("com.github.johnrengelman.shadow") version "7.1.1"
   id("io.itsusinn.pkg") version "1.0.0"
 }
 repositories {
   mavenCentral()
+  mavenLocal()
+
   maven("https://oss.sonatype.org/content/repositories/snapshots/")
   maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
   maven("https://jitpack.io")
 }
-kato {
-  exclude("META-INF/*.kotlin_module")
-  exclude("*.md")
-  exclude("DebugProbesKt.bin")
+pkg {
+  excludePath("META-INF/*.kotlin_module")
+  excludePath("*.md")
+  excludePath("DebugProbesKt.bin")
   excludePathStartWith("META-INF/maven")
+  excludePathStartWith("org/bouncycastle")
+  excludePathStartWith("org/slf4j")
   shadowJar {
     minimize()
+    mergeServiceFiles()
   }
+  relocateKotlinStdlib()
+  relocateKotlinxLib()
 }
 java {
   targetCompatibility = JavaVersion.VERSION_1_8
