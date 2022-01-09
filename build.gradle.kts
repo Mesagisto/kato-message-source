@@ -1,12 +1,11 @@
 group = "org.meowcat"
-version = "1.1.0-rc1-fix1"
-
+version = property("project_version")!!
 plugins {
   java
   kotlin("jvm") version "1.5.21"
   kotlin("plugin.serialization") version "1.5.21"
   id("com.github.johnrengelman.shadow") version "6.0.0"
-  id("org.meowcat.kato") version "0.1.0-dev24"
+  id("io.itsusinn.pkg") version "1.0.0"
 }
 repositories {
   mavenCentral()
@@ -42,10 +41,18 @@ dependencies {
   implementation("io.arrow-kt:arrow-core:1.0.0")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
-
-kotlin.target.compilations.all {
-  kotlinOptions {
-    apiVersion = "1.5"
-    languageVersion = "1.5"
+tasks {
+  processResources {
+    inputs.property("version", project.version)
+    filesMatching("plugin.yml") {
+      expand(mutableMapOf("version" to project.version))
+    }
+  }
+  compileKotlin {
+    kotlinOptions {
+      jvmTarget = "1.8"
+      freeCompilerArgs = listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
+    }
+    sourceCompatibility = "1.8"
   }
 }

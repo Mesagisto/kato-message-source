@@ -1,4 +1,4 @@
-name: "minecraft-message-source"
+name: "bukkit-message-source"
 main: "org.meowcat.mesagisto.kato.platform.Bukkit"
-version: "1.0.0"
+version: "${version}"
 api-version: 1.13
