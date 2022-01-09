@@ -42,10 +42,11 @@ tasks.compileKotlin {
 
 dependencies {
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.3.2")
   implementation("io.nats:jnats:2.13.1")
-  implementation("org.meowcat:mesagisto-client-jvm:1.0.12")
-  implementation("io.arrow-kt:arrow-core:1.0.0")
+  implementation("org.meowcat:mesagisto-client-jvm:1.1.2")
+  // implementation("org.meowcat:mesagisto-client:1.1.1-n4")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
 tasks {

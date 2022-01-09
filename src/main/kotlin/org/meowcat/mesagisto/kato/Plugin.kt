@@ -24,13 +24,14 @@ object Plugin : JvmPlugin(), CoroutineScope {
       Logger.info { "信使插件未启用" }
       return@fn
     }
-    if (Config.cipher.enable) {
-      Cipher.init(Config.cipher.key, Config.cipher.refusePlain)
-    } else {
-      Cipher.deinit()
-    }
-    Db.init("mc")
-    Server.initNC(Config.nats.address)
+    MesagistoConfig.builder {
+      name = "bukkit"
+      natsAddress = Config.nats.address
+      cipherEnable = Config.cipher.enable
+      cipherKey = Config.cipher.key
+      cipherRefusePlain = Config.cipher.refusePlain
+    }.apply()
+
     Res.resolvePhotoUrl { _, _ ->
       Result.failure(IllegalStateException("Unreachable"))
     }
