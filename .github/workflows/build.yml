@@ -15,9 +15,9 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: 11
+          java-version: 17
           distribution: zulu
           cache: gradle
 
       - name: Build
-        run: make compile
+        run: bash build.sh
