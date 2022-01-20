@@ -21,7 +21,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
   }
   override suspend fun onEnable() = runCatching fn@{
     if (!Config.enable) {
-      Logger.info { "信使插件未启用" }
+      Logger.info { "Mesagisto信使未启用" }
       return@fn
     }
     MesagistoConfig.builder {
@@ -32,11 +32,8 @@ object Plugin : JvmPlugin(), CoroutineScope {
       cipherRefusePlain = Config.cipher.refusePlain
     }.apply()
 
-    Res.resolvePhotoUrl { _, _ ->
-      Result.failure(IllegalStateException("Unreachable"))
-    }
     bukkit.server.pluginManager.registerEvents(Listener, bukkit)
-    Logger.info { "信使插件启用成功" }
+    Logger.info { "Mesagisto信使启用成功" }
   }
 
   override suspend fun onDisable() = runCatching {
