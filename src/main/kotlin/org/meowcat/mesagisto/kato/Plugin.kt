@@ -13,6 +13,8 @@ object Plugin : JvmPlugin(), CoroutineScope {
 
   private lateinit var bukkit: JavaPlugin
 
+  private var closed: Boolean = false
+
   override suspend fun onLoad(bukkit: JavaPlugin): Result<Unit> = runCatching fn@{
     this.bukkit = bukkit
     Logger.bridgeToBukkit(Plugin.bukkit.logger)
@@ -20,6 +22,9 @@ object Plugin : JvmPlugin(), CoroutineScope {
     return@fn
   }
   override suspend fun onEnable() = runCatching fn@{
+    if (closed) {
+      throw IllegalStateException("hot reload error")
+    }
     if (!Config.enable) {
       Logger.info { "Mesagisto信使未启用" }
       return@fn
@@ -39,5 +44,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
   override suspend fun onDisable() = runCatching {
     IdGen.save()
     Config.save()
+    Server.close()
+    closed = true
   }
 }
