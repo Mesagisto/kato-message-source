@@ -2,8 +2,11 @@ package org.meowcat.mesagisto.kato
 
 import kotlinx.coroutines.CoroutineScope
 import org.bukkit.plugin.java.JavaPlugin
-import org.meowcat.mesagisto.client.* // ktlint-disable no-wildcard-imports
+import org.meowcat.mesagisto.client.Logger
+import org.meowcat.mesagisto.client.MesagistoConfig
+import org.meowcat.mesagisto.client.Server
 import org.meowcat.mesagisto.kato.handlers.Listener
+import org.meowcat.mesagisto.kato.handlers.Receive
 import org.meowcat.mesagisto.kato.platform.JvmPlugin
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -29,6 +32,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
       Logger.info { "Mesagisto信使未启用" }
       return@fn
     }
+
     MesagistoConfig.builder {
       name = "bukkit"
       natsAddress = Config.nats.address
@@ -36,7 +40,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
       cipherKey = Config.cipher.key
       cipherRefusePlain = Config.cipher.refusePlain
     }.apply()
-
+    Receive.recover()
     bukkit.server.pluginManager.registerEvents(Listener, bukkit)
     Logger.info { "Mesagisto信使启用成功" }
   }
