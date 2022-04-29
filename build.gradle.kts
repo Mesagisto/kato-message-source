@@ -4,8 +4,8 @@ group = "org.meowcat"
 version = property("project_version")!!
 plugins {
   java
-  kotlin("jvm") version "1.5.21"
-  kotlin("plugin.serialization") version "1.5.21"
+  kotlin("jvm") version "1.6.0"
+  kotlin("plugin.serialization") version "1.6.0"
   id("com.github.johnrengelman.shadow") version "7.1.1"
   id("io.itsusinn.pkg") version "1.2.0"
 }
@@ -42,9 +42,9 @@ tasks.compileKotlin {
 
 dependencies {
   compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
-  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
-  pkgIn("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.3.2")
-  pkgIn("io.nats:jnats:2.13.1")
+  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+  pkgIn("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.2.2")
+  pkgIn("io.nats:jnats:2.14.0")
   pkgIn("org.meowcat:mesagisto-client-jvm:1.2.0")
   // implementation("org.meowcat:mesagisto-client:1.1.1-n4")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
