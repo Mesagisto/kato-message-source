@@ -45,7 +45,7 @@ dependencies {
   pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
   pkgIn("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.2.2")
   pkgIn("io.nats:jnats:2.14.0")
-  pkgIn("org.meowcat:mesagisto-client-jvm:1.2.0")
+  pkgIn("org.meowcat:mesagisto-client-jvm:1.3.0")
   // implementation("org.meowcat:mesagisto-client:1.1.1-n4")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
