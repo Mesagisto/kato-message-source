@@ -1,7 +1,7 @@
 import io.itsusinn.pkg.pkgIn
 
 group = "org.meowcat"
-version = property("project_version")!!
+version = "1.3.0"
 plugins {
   java
   kotlin("jvm") version "1.6.0"
