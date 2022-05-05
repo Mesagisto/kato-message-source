@@ -8,11 +8,12 @@ import org.meowcat.mesagisto.client.data.Either
 import org.meowcat.mesagisto.client.data.Message
 import org.meowcat.mesagisto.client.data.MessageType
 import org.meowcat.mesagisto.client.data.Packet
-import org.meowcat.mesagisto.kato.Config
+import org.meowcat.mesagisto.kato.Plugin.CONFIG
+import org.meowcat.mesagisto.kato.Template
 
 object Receive {
   suspend fun recover() {
-    Server.recv("0", Config.channel!!) handler@{ msg, _ ->
+    Server.recv("0", CONFIG.channel) handler@{ msg, _ ->
       return@handler mainHandler(msg as NatsMessage)
     }
   }

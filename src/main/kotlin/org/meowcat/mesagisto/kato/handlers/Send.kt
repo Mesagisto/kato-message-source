@@ -4,13 +4,13 @@ import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.meowcat.mesagisto.client.Server
 import org.meowcat.mesagisto.client.data.* // ktlint-disable no-wildcard-imports
 import org.meowcat.mesagisto.client.toByteArray
-import org.meowcat.mesagisto.kato.Config
 import org.meowcat.mesagisto.kato.IdGen
+import org.meowcat.mesagisto.kato.Plugin.CONFIG
 
 suspend fun send(
   event: AsyncPlayerChatEvent
 ) {
-  val channel = Config.channel ?: return
+  val channel = CONFIG.channel
   val msgId = IdGen.gen()
   val chain = listOf<MessageType>(
     MessageType.Text(event.message)

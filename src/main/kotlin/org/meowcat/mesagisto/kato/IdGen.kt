@@ -1,12 +1,13 @@
 package org.meowcat.mesagisto.kato
 
+import org.meowcat.mesagisto.kato.Plugin.CONFIG
 import java.util.concurrent.atomic.AtomicInteger
 
 object IdGen {
-  private val cur by lazy { AtomicInteger(Config.idBase) }
+  private val cur by lazy { AtomicInteger(CONFIG.idBase) }
   fun gen(): Int = cur.getAndIncrement()
 
   fun save() {
-    Config.idBase = cur.get()
+    CONFIG.idBase = cur.get()
   }
 }
