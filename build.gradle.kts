@@ -47,6 +47,7 @@ dependencies {
   pkgIn("io.nats:jnats:2.14.0")
   pkgIn("org.meowcat:mesagisto-client-jvm:1.3.0")
   // implementation("org.meowcat:mesagisto-client:1.1.1-n4")
+  pkgIn("com.github.jknack:handlebars:4.3.0")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
 tasks {

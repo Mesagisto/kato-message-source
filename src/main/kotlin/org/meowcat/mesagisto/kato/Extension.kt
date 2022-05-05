@@ -6,7 +6,7 @@ import org.meowcat.mesagisto.client.Logger
 import java.util.logging.Level
 
 typealias StdLogger = java.util.logging.Logger
-
+typealias HandlebarsTemplate = com.github.jknack.handlebars.Template
 fun Logger.bridgeToBukkit(impl: StdLogger) {
   level = when (impl.level) {
     Level.ALL -> LogLevel.TRACE

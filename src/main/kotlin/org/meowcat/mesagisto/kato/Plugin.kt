@@ -28,6 +28,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
     this.bukkit = bukkit
     Logger.bridgeToBukkit(Plugin.bukkit.logger)
     CONFIG_KEEPER.save()
+    Template.init()
     return@fn
   }
   override suspend fun onEnable() = runCatching fn@{

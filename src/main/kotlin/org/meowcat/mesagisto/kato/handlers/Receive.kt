@@ -1,5 +1,6 @@
 package org.meowcat.mesagisto.kato.handlers
 
+import com.github.jknack.handlebars.Context
 import io.nats.client.impl.NatsMessage
 import org.bukkit.Bukkit
 import org.meowcat.mesagisto.client.Base64
@@ -36,7 +37,17 @@ fun leftSubHandler(
   val senderName = with(message.profile) { nick ?: username ?: Base64.encodeToString(id) }
   val msgList = message.chain.filterIsInstance<MessageType.Text>()
   msgList.forEach {
-    val text = "<$senderName> ${it.content}"
+    val text = renderMessage(senderName, it.content)
     Bukkit.broadcastMessage(text)
   }
+}
+
+private fun renderMessage(sender: String, content: String): String {
+  val module = HashMap<String, String>(2)
+  module.apply {
+    put("sender", sender)
+    put("content", content)
+  }
+  val context = Context.newContext(module)
+  return Template.apply("message", context)
 }
