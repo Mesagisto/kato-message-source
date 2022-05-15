@@ -3,29 +3,31 @@ package org.meowcat.mesagisto.kato.platform
 import kotlinx.coroutines.* // ktlint-disable no-wildcard-imports
 import org.bukkit.plugin.java.JavaPlugin
 import org.meowcat.mesagisto.kato.Plugin
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 class Bukkit : JavaPlugin(), CoroutineScope {
-  override val coroutineContext: CoroutineContext = EmptyCoroutineContext
+  override val coroutineContext = CoroutineScope(Dispatchers.Default).coroutineContext
 
-  private val inner: JvmPlugin by lazy { Plugin }
-  override fun onLoad() = runBlocking {
-    coroutineContext.ensureActive()
-    inner.coroutineContext.ensureActive()
-    inner.onLoad(this@Bukkit).getOrThrow()
+  private val inner: JvmPlugin = Plugin
+  override fun onLoad() {
+    launch {
+      coroutineContext.ensureActive()
+      inner.coroutineContext.ensureActive()
+      inner.onLoad(this@Bukkit).getOrThrow()
+    }
   }
-  override fun onEnable(): Unit = runBlocking {
-    inner.launch {
+  override fun onEnable() {
+    launch {
       inner.onEnable().getOrThrow()
     }
   }
 
-  override fun onDisable() = runBlocking {
-    inner.launch {
+  override fun onDisable() {
+    runBlocking {
       inner.onDisable().getOrThrow()
     }
-    inner.coroutineContext.cancel()
-    coroutineContext.cancel()
+    runCatching {
+      inner.coroutineContext.cancel()
+      coroutineContext.cancel()
+    }
   }
 }

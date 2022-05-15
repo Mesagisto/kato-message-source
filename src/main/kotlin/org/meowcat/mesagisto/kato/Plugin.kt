@@ -9,13 +9,9 @@ import org.meowcat.mesagisto.client.utils.ConfigKeeper
 import org.meowcat.mesagisto.kato.handlers.Listener
 import org.meowcat.mesagisto.kato.handlers.Receive
 import org.meowcat.mesagisto.kato.platform.JvmPlugin
-import java.nio.file.Path
-import kotlin.coroutines.EmptyCoroutineContext
+import java.io.File
 
 object Plugin : JvmPlugin(), CoroutineScope {
-
-  override val coroutineContext = EmptyCoroutineContext
-
   private lateinit var bukkit: JavaPlugin
 
   private var closed: Boolean = false
