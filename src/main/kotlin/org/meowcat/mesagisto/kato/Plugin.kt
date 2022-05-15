@@ -16,7 +16,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
 
   private var closed: Boolean = false
 
-  private val CONFIG_KEEPER = ConfigKeeper.create(Path.of("plugins/mesagisto/config.yml")) { RootConfig() }
+  private val CONFIG_KEEPER = ConfigKeeper.create(File("plugins/mesagisto/config.yml").toPath()) { RootConfig() }
 
   val CONFIG = CONFIG_KEEPER.value
 
