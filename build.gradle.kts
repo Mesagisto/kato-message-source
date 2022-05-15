@@ -26,7 +26,6 @@ pkg {
   excludePathStartWith("org/jetbrains")
   excludePathStartWith("org/intellij")
   excludePath("*.md")
-  excludePath("*.js")
   excludePath("DebugProbesKt.bin")
   excludePathStartWith("kotlinx/coroutines/flow")
   listOf("asn1", "jcajce", "jce", "pqc", "x509", "math", "i18n", "iana", "internal").forEach {
