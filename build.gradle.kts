@@ -1,7 +1,7 @@
 import io.itsusinn.pkg.pkgIn
 
 group = "org.meowcat"
-version = "1.3.2"
+version = "1.3.3"
 plugins {
   java
   kotlin("jvm") version "1.7.0"
@@ -47,7 +47,7 @@ dependencies {
     exclude(group = "org.jetbrains.kotlin")
   }
   pkgIn("io.nats:jnats:2.15.3")
-  pkgIn("org.mesagisto:mesagisto-client:1.5.1-dev") {
+  pkgIn("org.mesagisto:mesagisto-client:1.5.0") {
     exclude(group = "org.jetbrains.kotlin")
   }
   if (System.getenv("NO_KT") == "false") {
