@@ -4,8 +4,7 @@ group = "org.meowcat"
 version = "1.3.2"
 plugins {
   java
-  kotlin("jvm") version "1.6.0"
-  kotlin("plugin.serialization") version "1.6.0"
+  kotlin("jvm") version "1.7.0"
   id("com.github.johnrengelman.shadow") version "7.1.1"
   id("io.itsusinn.pkg") version "1.2.2"
 }
@@ -36,29 +35,30 @@ pkg {
     minimize()
     mergeServiceFiles()
   }
-  relocateKotlinStdlib()
-  relocateKotlinxLib()
+  kotlinRelocate("org.yaml.snakeyaml","$group.relocate.org.yaml.snakeyaml")
 }
 java {
   targetCompatibility = JavaVersion.VERSION_1_8
   sourceCompatibility = JavaVersion.VERSION_1_8
 }
-tasks.compileKotlin {
-  kotlinOptions {
-    jvmTarget = "1.8"
-    freeCompilerArgs = listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
-  }
-  sourceCompatibility = "1.8"
-}
 
 dependencies {
-  compileOnly("org.jetbrains.kotlin:kotlin-stdlib")
-  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-  pkgIn("org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.2.2")
-  pkgIn("io.nats:jnats:2.14.0")
-  pkgIn("org.meowcat:mesagisto-client-jvm:1.4.0")
-  // pkgIn("org.meowcat:mesagisto-client:1.4.0-build3")
+  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2") {
+    exclude(group = "org.jetbrains.kotlin")
+  }
+  pkgIn("io.nats:jnats:2.15.3")
+  pkgIn("org.mesagisto:mesagisto-client:1.5.1-dev") {
+    exclude(group = "org.jetbrains.kotlin")
+  }
+  if (System.getenv("NO_KT") == "false") {
+    pkgIn("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
+    pkgIn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
+  }
+  pkgIn("org.jetbrains.kotlin:kotlin-reflect:1.7.0") {
+    isTransitive = false
+  }
   pkgIn("com.github.jknack:handlebars:4.3.0")
+  pkgIn("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
 }
 tasks {
@@ -71,8 +71,8 @@ tasks {
   compileKotlin {
     kotlinOptions {
       jvmTarget = "1.8"
+      languageVersion = "1.5"
       freeCompilerArgs = listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
     }
-    sourceCompatibility = "1.8"
   }
 }
