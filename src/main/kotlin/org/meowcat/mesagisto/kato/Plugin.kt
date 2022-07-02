@@ -39,9 +39,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
     MesagistoConfig.builder {
       name = "bukkit"
       natsAddress = CONFIG.nats
-      cipherEnable = CONFIG.cipher.enable
       cipherKey = CONFIG.cipher.key
-      cipherRefusePlain = CONFIG.cipher.refusePlain
     }.apply()
     Receive.recover()
     bukkit.server.pluginManager.registerEvents(Listener, bukkit)
