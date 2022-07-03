@@ -35,7 +35,9 @@ pkg {
     minimize()
     mergeServiceFiles()
   }
-  kotlinRelocate("org.yaml.snakeyaml","$group.relocate.org.yaml.snakeyaml")
+  kotlinRelocate("org.yaml.snakeyaml", "$group.relocate.org.yaml.snakeyaml")
+  relocateKotlinStdlib()
+  relocateKotlinxLib()
 }
 java {
   targetCompatibility = JavaVersion.VERSION_1_8
@@ -43,20 +45,9 @@ java {
 }
 
 dependencies {
-  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2") {
-    exclude(group = "org.jetbrains.kotlin")
-  }
+  pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
   pkgIn("io.nats:jnats:2.15.3")
-  pkgIn("org.mesagisto:mesagisto-client:1.5.0") {
-    exclude(group = "org.jetbrains.kotlin")
-  }
-  if (System.getenv("NO_KT") == "false") {
-    pkgIn("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
-    pkgIn("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
-  }
-  pkgIn("org.jetbrains.kotlin:kotlin-reflect:1.7.0") {
-    isTransitive = false
-  }
+  pkgIn("org.mesagisto:mesagisto-client:1.5.1")
   pkgIn("com.github.jknack:handlebars:4.3.0")
   pkgIn("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
