@@ -3,6 +3,8 @@ package org.meowcat.mesagisto.kato
 import org.meowcat.mesagisto.client.ILogger
 import org.meowcat.mesagisto.client.LogLevel
 import org.meowcat.mesagisto.client.Logger
+import java.nio.ByteBuffer
+import java.util.*
 import java.util.logging.Level
 
 typealias StdLogger = java.util.logging.Logger
@@ -28,3 +30,20 @@ fun Logger.bridgeToBukkit(impl: StdLogger) {
     }
   }
 }
+
+object UuidUtils {
+  fun asUuid(bytes: ByteArray): UUID {
+    val bb: ByteBuffer = ByteBuffer.wrap(bytes)
+    val firstLong: Long = bb.long
+    val secondLong: Long = bb.long
+    return UUID(firstLong, secondLong)
+  }
+
+  fun asBytes(uuid: UUID): ByteArray {
+    val bb: ByteBuffer = ByteBuffer.wrap(ByteArray(16))
+    bb.putLong(uuid.mostSignificantBits)
+    bb.putLong(uuid.leastSignificantBits)
+    return bb.array()
+  }
+}
+fun UUID.asBytes(): ByteArray = UuidUtils.asBytes(this)
