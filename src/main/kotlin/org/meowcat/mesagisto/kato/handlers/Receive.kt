@@ -14,7 +14,7 @@ import org.meowcat.mesagisto.kato.Template
 
 object Receive {
   suspend fun recover() {
-    Server.recv("0", CONFIG.channel) handler@{ msg, _ ->
+    Server.recv(CONFIG.target, CONFIG.channel) handler@{ msg, _ ->
       return@handler mainHandler(msg as NatsMessage)
     }
   }
@@ -32,7 +32,7 @@ fun mainHandler(
   }
 }
 fun leftSubHandler(
-  message: Message,
+  message: Message
 ): Result<Unit> = runCatching fn@{
   val senderName = with(message.profile) { nick ?: username ?: Base64.encodeToString(id) }
   val msgList = message.chain.filterIsInstance<MessageType.Text>()

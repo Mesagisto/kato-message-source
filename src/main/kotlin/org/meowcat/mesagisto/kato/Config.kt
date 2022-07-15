@@ -8,12 +8,13 @@ data class RootConfig(
   val cipher: CipherConfig = CipherConfig(),
   @JsonAlias("id_base")
   var idBase: Int = 0,
+  val target: String = "target-name",
   val nats: String = "nats://nats.mesagisto.org:4222",
   val template: TemplateConfig = TemplateConfig()
 )
 
 data class CipherConfig(
-  val key: String = "default",
+  val key: String = "default"
 )
 
 data class TemplateConfig(

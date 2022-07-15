@@ -30,7 +30,7 @@ pkg {
     excludePathStartWith("org/bouncycastle/$it")
   }
   excludePathStartWith("META-INF/maven")
-  listOf("stream", "math")
+
   shadowJar {
     minimize()
     mergeServiceFiles()

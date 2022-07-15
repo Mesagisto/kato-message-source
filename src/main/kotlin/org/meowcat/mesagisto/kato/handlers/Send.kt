@@ -27,5 +27,5 @@ suspend fun send(
     chain = chain
   )
   val packet = Packet.from(message.left())
-  Server.send("0", channel, packet)
+  Server.send(CONFIG.target, channel, packet)
 }
