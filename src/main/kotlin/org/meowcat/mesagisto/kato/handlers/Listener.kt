@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 
 object Listener : Listener, CoroutineScope {
 
-  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   fun handle(event: AsyncPlayerChatEvent) {
     if (!CONFIG.enable) {
       Logger.info { "Mesagisto信使未被启用！" }
