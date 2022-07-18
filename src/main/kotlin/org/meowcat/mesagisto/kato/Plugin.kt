@@ -17,9 +17,9 @@ object Plugin : JvmPlugin(), CoroutineScope {
   private var closed: Boolean = false
 
   private val CONFIG_KEEPER = ConfigKeeper.create(File("plugins/mesagisto/config.yml").toPath()) { RootConfig() }
-
+  private val DATA_KEEPER = ConfigKeeper.create(File("plugins/mesagisto/data.yml").toPath()) { RootData() }
   val CONFIG = CONFIG_KEEPER.value
-
+  val DATA = DATA_KEEPER.value
   override suspend fun onLoad(bukkit: JavaPlugin): Result<Unit> = runCatching fn@{
     this.bukkit = bukkit
     Logger.bridgeToBukkit(Plugin.bukkit.logger)
@@ -30,10 +30,6 @@ object Plugin : JvmPlugin(), CoroutineScope {
   override suspend fun onEnable() = runCatching fn@{
     if (closed) {
       throw IllegalStateException("hot reload error")
-    }
-    if (!CONFIG.enable) {
-      Logger.info { "Mesagisto信使未启用" }
-      return@fn
     }
 
     MesagistoConfig.builder {
@@ -49,11 +45,8 @@ object Plugin : JvmPlugin(), CoroutineScope {
   override suspend fun onDisable() = runCatching {
     // attention!! before this term, zip(jar) is closed
     // so, loading class before onDisable
-    IdGen.save()
-    CONFIG_KEEPER.save()
-    if (CONFIG.enable) {
-      Server.close()
-    }
+    DATA_KEEPER.save()
+    Server.close()
     closed = true
   }
 }
