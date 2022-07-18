@@ -1,6 +1,5 @@
 package org.meowcat.mesagisto.kato.handlers
 
-import org.bukkit.Bukkit
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerJoinEvent
@@ -35,7 +34,7 @@ suspend fun send(
   Server.send(CONFIG.target, channel, packet)
 }
 suspend fun sendPlayerJoin(event: PlayerJoinEvent) {
-  val servername = Bukkit.getServerName()
+  val servername = CONFIG.serverName
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
@@ -54,7 +53,7 @@ suspend fun sendPlayerJoin(event: PlayerJoinEvent) {
   Server.send(CONFIG.target, channel, packet)
 }
 suspend fun sendPlayerLeave(event: PlayerQuitEvent) {
-  val servername = Bukkit.getServerName()
+  val servername = CONFIG.serverName
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
@@ -73,7 +72,7 @@ suspend fun sendPlayerLeave(event: PlayerQuitEvent) {
   Server.send(CONFIG.target, channel, packet)
 }
 suspend fun sendPlayerDeath(event: PlayerDeathEvent) {
-  val servername = Bukkit.getServerName()
+  val servername = CONFIG.serverName
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(

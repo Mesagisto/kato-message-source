@@ -4,11 +4,12 @@ import org.bukkit.event.EventPriority
 import java.util.concurrent.atomic.AtomicInteger
 
 data class RootConfig(
+  val serverName: String = "Server Name",
   val channel: String = "your-channel",
-  val cipher: CipherConfig = CipherConfig(),
   val target: String = "target-name",
-  val eventPriority: EventPriority = EventPriority.NORMAL,
   val nats: String = "nats://nats.mesagisto.org:4222",
+  val cipher: CipherConfig = CipherConfig(),
+  val eventPriority: EventPriority = EventPriority.NORMAL,
   val switch: SwitchConfig = SwitchConfig(),
   val template: TemplateConfig = TemplateConfig()
 )
@@ -30,6 +31,5 @@ data class SwitchConfig(
   val death: Boolean = true
 )
 data class RootData(
-
   var idCounter: AtomicInteger = AtomicInteger(0)
 )
