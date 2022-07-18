@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap
 object Template {
   private val handlebars = Handlebars()
   private val cache = ConcurrentHashMap<String, HandlebarsTemplate>()
-  fun compile(name: String, input: String) {
+  private fun compile(name: String, input: String) {
     if (cache.contains(name)) {
       cache.remove(name)
     }
@@ -25,5 +25,43 @@ object Template {
   }
   fun init() {
     compile("message", CONFIG.template.message)
+    compile("join", CONFIG.template.join)
+    compile("leave", CONFIG.template.leave)
+    compile("death", CONFIG.template.death)
+  }
+  fun renderMessage(sender: String, content: String): String {
+    val module = HashMap<String, String>(2)
+    module.apply {
+      put("sender", sender)
+      put("content", content)
+    }
+    val context = Context.newContext(module)
+    return Template.apply("message", context)
+  }
+
+  fun renderJoin(player: String): String {
+    val module = HashMap<String, String>(2)
+    module.apply {
+      put("player", player)
+    }
+    val context = Context.newContext(module)
+    return Template.apply("join", context)
+  }
+  fun renderLeave(player: String): String {
+    val module = HashMap<String, String>(2)
+    module.apply {
+      put("player", player)
+    }
+    val context = Context.newContext(module)
+    return Template.apply("leave", context)
+  }
+  fun renderDeath(player: String, message: String): String {
+    val module = HashMap<String, String>(2)
+    module.apply {
+      put("message", message)
+      put("player", message)
+    }
+    val context = Context.newContext(module)
+    return Template.apply("death", context)
   }
 }
