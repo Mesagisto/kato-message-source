@@ -16,6 +16,7 @@ import kotlin.coroutines.CoroutineContext
 object Listener : Listener, CoroutineScope {
 
   private fun handlePlayerChat(event: AsyncPlayerChatEvent) {
+    if (!CONFIG.switch.chat) return
     launch {
       send(event)
     }
@@ -23,6 +24,7 @@ object Listener : Listener, CoroutineScope {
 
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   fun handlePlayerJoin(event: PlayerJoinEvent) {
+    if (!CONFIG.switch.join) return
     launch {
       sendPlayerJoin(event)
     }
@@ -30,6 +32,7 @@ object Listener : Listener, CoroutineScope {
 
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   fun handlePlayerLeave(event: PlayerQuitEvent) {
+    if (!CONFIG.switch.leave) return
     launch {
       sendPlayerLeave(event)
     }
@@ -37,6 +40,7 @@ object Listener : Listener, CoroutineScope {
 
   @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
   fun handlePlayerDeath(event: PlayerDeathEvent) {
+    if (!CONFIG.switch.death) return
     launch {
       sendPlayerDeath(event)
     }

@@ -6,10 +6,10 @@ import java.util.concurrent.atomic.AtomicInteger
 data class RootConfig(
   val channel: String = "your-channel",
   val cipher: CipherConfig = CipherConfig(),
-
   val target: String = "target-name",
   val eventPriority: EventPriority = EventPriority.NORMAL,
   val nats: String = "nats://nats.mesagisto.org:4222",
+  val switch: SwitchConfig = SwitchConfig(),
   val template: TemplateConfig = TemplateConfig()
 )
 
@@ -23,7 +23,12 @@ data class TemplateConfig(
   val leave: String = "{{player}}离开了服务器",
   val death: String = "{{message}}"
 )
-
+data class SwitchConfig(
+  val chat: Boolean = true,
+  val join: Boolean = true,
+  val leave: Boolean = true,
+  val death: Boolean = true
+)
 data class RootData(
 
   var idCounter: AtomicInteger = AtomicInteger(0)
