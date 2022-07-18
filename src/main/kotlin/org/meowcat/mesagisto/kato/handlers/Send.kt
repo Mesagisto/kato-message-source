@@ -11,6 +11,7 @@ import org.meowcat.mesagisto.kato.Plugin.CONFIG
 import org.meowcat.mesagisto.kato.Plugin.DATA
 import org.meowcat.mesagisto.kato.Template
 import org.meowcat.mesagisto.kato.asBytes
+import org.meowcat.mesagisto.kato.stripColor
 
 suspend fun send(
   event: AsyncPlayerChatEvent
@@ -76,7 +77,7 @@ suspend fun sendPlayerDeath(event: PlayerDeathEvent) {
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
-    MessageType.Text(Template.renderDeath(event.entity.playerListName,event.deathMessage))
+    MessageType.Text(Template.renderDeath(event.entity.playerListName, event.deathMessage.stripColor()))
   )
   val message = Message(
     profile = Profile(

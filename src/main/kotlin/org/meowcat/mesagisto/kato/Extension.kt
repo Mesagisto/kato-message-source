@@ -47,3 +47,5 @@ object UuidUtils {
   }
 }
 fun UUID.asBytes(): ByteArray = UuidUtils.asBytes(this)
+
+fun String.stripColor(): String = replace(Regex("\\u00A7[0-9A-FK-OR]", RegexOption.IGNORE_CASE), "")

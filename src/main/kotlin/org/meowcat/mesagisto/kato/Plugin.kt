@@ -10,6 +10,8 @@ import org.meowcat.mesagisto.kato.handlers.Listener
 import org.meowcat.mesagisto.kato.handlers.Receive
 import org.meowcat.mesagisto.kato.platform.JvmPlugin
 import java.io.File
+import kotlin.io.path.Path
+import kotlin.io.path.createDirectories
 
 object Plugin : JvmPlugin(), CoroutineScope {
   private lateinit var bukkit: JavaPlugin
@@ -21,6 +23,7 @@ object Plugin : JvmPlugin(), CoroutineScope {
   val CONFIG = CONFIG_KEEPER.value
   val DATA = DATA_KEEPER.value
   override suspend fun onLoad(bukkit: JavaPlugin): Result<Unit> = runCatching fn@{
+    Path("db_v2/bukkit").createDirectories()
     this.bukkit = bukkit
     Logger.bridgeToBukkit(Plugin.bukkit.logger)
     CONFIG_KEEPER.save()
