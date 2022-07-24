@@ -19,14 +19,14 @@ suspend fun send(
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
-    MessageType.Text(event.message)
+    MessageType.Text(event.message.stripColor())
   )
   val sender = event.player
   val message = Message(
     profile = Profile(
       sender.uniqueId.asBytes(),
-      sender.name,
-      sender.playerListName
+      sender.name.stripColor(),
+      sender.playerListName.stripColor()
     ),
     id = msgId.toByteArray(),
     chain = chain
@@ -39,7 +39,7 @@ suspend fun sendPlayerJoin(event: PlayerJoinEvent) {
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
-    MessageType.Text(Template.renderJoin(event.player.playerListName))
+    MessageType.Text(Template.renderJoin(event.player.playerListName.stripColor()))
   )
   val message = Message(
     profile = Profile(
@@ -58,7 +58,7 @@ suspend fun sendPlayerLeave(event: PlayerQuitEvent) {
   val channel = CONFIG.channel
   val msgId = DATA.idCounter.getAndIncrement()
   val chain = listOf<MessageType>(
-    MessageType.Text(Template.renderLeave(event.player.playerListName))
+    MessageType.Text(Template.renderLeave(event.player.playerListName.stripColor()))
   )
   val message = Message(
     profile = Profile(
