@@ -36,7 +36,7 @@ object Template {
       put("content", content)
     }
     val context = Context.newContext(module)
-    return Template.apply("message", context)
+    return apply("message", context)
   }
 
   fun renderJoin(player: String): String {
@@ -45,7 +45,7 @@ object Template {
       put("player", player)
     }
     val context = Context.newContext(module)
-    return Template.apply("join", context)
+    return apply("join", context)
   }
   fun renderLeave(player: String): String {
     val module = HashMap<String, String>(2)
@@ -53,15 +53,15 @@ object Template {
       put("player", player)
     }
     val context = Context.newContext(module)
-    return Template.apply("leave", context)
+    return apply("leave", context)
   }
   fun renderDeath(player: String, message: String): String {
     val module = HashMap<String, String>(2)
     module.apply {
       put("message", message)
-      put("player", message)
+      put("player", player)
     }
     val context = Context.newContext(module)
-    return Template.apply("death", context)
+    return apply("death", context)
   }
 }
