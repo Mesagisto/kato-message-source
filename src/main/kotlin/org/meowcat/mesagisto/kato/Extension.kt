@@ -1,8 +1,8 @@
 package org.meowcat.mesagisto.kato
 
-import org.meowcat.mesagisto.client.ILogger
-import org.meowcat.mesagisto.client.LogLevel
-import org.meowcat.mesagisto.client.Logger
+import org.mesagisto.client.ILogger
+import org.mesagisto.client.LogLevel
+import org.mesagisto.client.Logger
 import java.nio.ByteBuffer
 import java.util.*
 import java.util.logging.Level
@@ -17,7 +17,7 @@ fun Logger.bridgeToBukkit(impl: StdLogger) {
     Level.WARNING -> LogLevel.WARN
     Level.SEVERE -> LogLevel.ERROR
     Level.OFF -> LogLevel.ERROR
-    else -> { LogLevel.TRACE }
+    else -> { LogLevel.INFO }
   }
   provider = object : ILogger {
     override fun log(level: LogLevel, msg: String) {

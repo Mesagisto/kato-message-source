@@ -4,7 +4,7 @@ group = "org.meowcat"
 version = "1.4.0"
 plugins {
   java
-  kotlin("jvm") version "1.7.0"
+  kotlin("jvm") version "1.6.0"
   id("com.github.johnrengelman.shadow") version "7.1.1"
   id("io.itsusinn.pkg") version "1.2.2"
 }
@@ -46,8 +46,7 @@ java {
 
 dependencies {
   pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
-  pkgIn("io.nats:jnats:2.15.3")
-  pkgIn("org.mesagisto:mesagisto-client:1.5.2")
+  pkgIn("org.mesagisto:mesagisto-client:1.6.0-rc.1")
   pkgIn("com.github.jknack:handlebars:4.3.0")
   pkgIn("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
@@ -62,8 +61,7 @@ tasks {
   compileKotlin {
     kotlinOptions {
       jvmTarget = "1.8"
-      languageVersion = "1.5"
-      freeCompilerArgs = listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
+      freeCompilerArgs = listOf("-Xinline-classes", "-opt-in=kotlin.RequiresOptIn")
     }
   }
 }

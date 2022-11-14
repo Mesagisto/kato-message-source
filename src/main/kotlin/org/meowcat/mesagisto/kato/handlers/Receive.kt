@@ -1,38 +1,52 @@
 package org.meowcat.mesagisto.kato.handlers
 
-import io.nats.client.impl.NatsMessage
 import org.bukkit.Bukkit
-import org.meowcat.mesagisto.client.Base64
-import org.meowcat.mesagisto.client.Server
-import org.meowcat.mesagisto.client.data.Either
-import org.meowcat.mesagisto.client.data.Message
-import org.meowcat.mesagisto.client.data.MessageType
-import org.meowcat.mesagisto.client.data.Packet
+import org.meowcat.mesagisto.kato.Plugin
 import org.meowcat.mesagisto.kato.Plugin.CONFIG
 import org.meowcat.mesagisto.kato.Template.renderMessage
+import org.mesagisto.client.Base64
+import org.mesagisto.client.Logger
+import org.mesagisto.client.Server
+import org.mesagisto.client.data.Message
+import org.mesagisto.client.data.MessageType
+import org.mesagisto.client.data.Packet
+import org.mesagisto.client.utils.ControlFlow
+import org.mesagisto.client.utils.Either
+import org.mesagisto.client.withCatch
 
 object Receive {
   suspend fun recover() {
-    Server.recv(CONFIG.target, CONFIG.channel) handler@{ msg, _ ->
-      return@handler mainHandler(msg as NatsMessage)
+    add(CONFIG.channel)
+  }
+  suspend fun add(roomAddress: String) {
+    val roomId = Server.roomId(roomAddress)
+    Server.sub(roomId, "mesagisto")
+  }
+  suspend fun packetHandler(pkt: Packet): Result<ControlFlow<Packet, Unit>> = withCatch(Plugin.coroutineContext) fn@{
+    if (pkt.ctl != null) {
+      return@fn ControlFlow.Continue(Unit)
     }
+    pkt.decrypt()
+      .onFailure {
+        Logger.warn { "数据解密失败" }
+      }
+      .onSuccess {
+        when (it) {
+          is Either.Left -> {
+            if (!it.value.from.contentEquals(CONFIG.target.toByteArray())) {
+              msgHandler(it.value, "mesagisto").onFailure { e -> Logger.error(e) }
+            }
+          }
+          is Either.Right -> return@fn ControlFlow.Break(pkt)
+        }
+      }
+    return@fn ControlFlow.Continue(Unit)
   }
 }
-fun mainHandler(
-  message: NatsMessage
+fun msgHandler(
+  message: Message,
+  server: String
 ): Result<Unit> = runCatching {
-  when (val packet = Packet.fromCbor(message.data).getOrThrow()) {
-    is Either.Left -> {
-      leftSubHandler(packet.value).getOrThrow()
-    }
-    is Either.Right -> {
-      packet.value
-    }
-  }
-}
-fun leftSubHandler(
-  message: Message
-): Result<Unit> = runCatching fn@{
   val senderName = with(message.profile) { nick ?: username ?: Base64.encodeToString(id) }
   val msgList = message.chain.filterIsInstance<MessageType.Text>()
   msgList.forEach {
@@ -40,4 +54,3 @@ fun leftSubHandler(
     Bukkit.broadcastMessage(text)
   }
 }
-
