@@ -10,7 +10,7 @@ data class RootConfig(
   val serverName: String = "Server Name",
   val channel: String = "your-channel",
   val target: String = "target-name",
-  val centers: ConcurrentHashMap<String, String> = ConcurrentHashMap<String, String>(1).apply { put("mesagisto", "wss://center.mesagisto.org") },
+  val centers: ConcurrentHashMap<String, String> = ConcurrentHashMap<String, String>(1).apply { put("mesagisto", "wss://builtin") },
   val cipher: CipherConfig = CipherConfig(),
   val eventPriority: EventPriority = EventPriority.NORMAL,
   val switch: SwitchConfig = SwitchConfig(),

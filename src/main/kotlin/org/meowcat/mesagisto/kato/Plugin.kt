@@ -12,8 +12,6 @@ import org.mesagisto.client.Server
 import org.mesagisto.client.utils.ConfigKeeper
 import java.io.File
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.io.path.Path
-import kotlin.io.path.createDirectories
 
 object Plugin : JvmPlugin(), CoroutineScope {
   override val coroutineContext = EmptyCoroutineContext
@@ -26,7 +24,6 @@ object Plugin : JvmPlugin(), CoroutineScope {
   val CONFIG = CONFIG_KEEPER.value
   val DATA = DATA_KEEPER.value
   override fun onLoad(bukkit: JavaPlugin): Result<Unit> = runCatching fn@{
-    Path("db_v2/bukkit").createDirectories()
     this.bukkit = bukkit
     Logger.bridgeToBukkit(Plugin.bukkit.logger)
     CONFIG_KEEPER.save()
