@@ -20,7 +20,6 @@ pkg {
   excludePathStartWith("META-INF/versions")
   excludePathStartWith("META-INF/proguard")
   excludePathStartWith("META-INF/maven")
-  excludePathStartWith("org/slf4j")
   excludePathStartWith("org/jetbrains")
   excludePathStartWith("org/intellij")
   excludePath("*.md")
