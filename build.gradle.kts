@@ -45,7 +45,7 @@ java {
 
 dependencies {
   pkgIn("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
-  pkgIn("org.mesagisto:mesagisto-client:1.6.0-rc.6")
+  pkgIn("org.mesagisto:mesagisto-client:1.6.0-rc.7")
   pkgIn("com.github.jknack:handlebars:4.3.0")
   pkgIn("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3")
   compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
