@@ -50,6 +50,7 @@ fun msgHandler(
   val senderName = with(message.profile) { nick ?: username ?: Base64.encodeToString(id) }
   val msgList = message.chain.filterIsInstance<MessageType.Text>()
   msgList.forEach {
+    if (CONFIG.enableReceiveFilter && !it.content.startsWith(CONFIG.receiveFilter)) return@forEach
     val text = renderMessage(senderName, it.content)
     Bukkit.broadcastMessage(text)
   }

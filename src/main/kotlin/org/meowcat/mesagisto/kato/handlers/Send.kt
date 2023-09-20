@@ -23,6 +23,7 @@ suspend fun send(
 ) {
   val roomId = CONFIG.roomId()
   val msgId = DATA.idCounter.getAndIncrement()
+  if (CONFIG.enableSendFilter && !event.message.stripColor().startsWith(CONFIG.sendFilter)) return
   val chain = listOf<MessageType>(
     MessageType.Text(event.message.stripColor())
   )
